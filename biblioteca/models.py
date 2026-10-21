@@ -21,14 +21,14 @@ class Libro(models.Model):
     def reservar_ejemplar(self):
         # Baja la cantidad del ejemplar en 1, y no pude quedar abajo de 0.
         if not self.esta_disponible():
-            raise SinDisponibilidad("No hay ejemplares disponibles de este libro.")
+            raise SinDisponibilidad("No hay ejemplares de este libro.")
         self.cantidad_disponible = self.cantidad_disponible - 1
         self.save()
 
     def liberar_ejemplar(self):
         # Suma un ejemplar.
         if self.cantidad_disponible >= self.cantidad_total:
-            raise CantidadInvalida("La cantidad disponible no puede superar la cantidad total.")
+            raise CantidadInvalida("La cantidad no puede superar la cantidad total.")
         self.cantidad_disponible = self.cantidad_disponible + 1
         self.save()
 
@@ -48,7 +48,6 @@ class Socio(models.Model):
         return f"N° {self.numero_socio} - {self.apellido}, {self.nombre} (DNI {self.dni}) - {estado}"
 
     def puede_reservar(self):
-        # Por ahora la única condición del socio es estar activo.
         return self.activo
 
     def activar(self):
