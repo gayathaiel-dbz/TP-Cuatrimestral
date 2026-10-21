@@ -57,3 +57,17 @@ class Socio(models.Model):
     def desactivar(self):
         self.activo = False
         self.save()
+        
+class Reserva(models.Model):
+    # Posibles estados de una reserva
+    PENDIENTE = "PENDIENTE"
+    RETIRADA = "RETIRADA"
+    CANCELADA = "CANCELADA"
+    FINALIZADA = "FINALIZADA"
+
+    ESTADOS = [
+        (PENDIENTE, "Pendiente"),
+        (RETIRADA, "Retirada"),
+        (CANCELADA, "Cancelada"),
+        (FINALIZADA, "Finalizada"),
+    ]
