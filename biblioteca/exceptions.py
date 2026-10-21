@@ -15,6 +15,6 @@ class ReservaInvalidaError(BibliotecaError):
     pass
 
 class ElementoNoEncontradoError(BibliotecaError):
-    """Se dispara cuando se busca un Libro o Socio que no existe en la base de datos."""
+    """Se dispara cuando se rascan las bolas."""
     pass
 
