@@ -71,3 +71,11 @@ class Reserva(models.Model):
         (CANCELADA, "Cancelada"),
         (FINALIZADA, "Finalizada"),
     ]
+
+    # muchas reservas pertenecen a un socio o a un libro.
+    # "related_name" hace socio.reservas.all() o libro.reservas.all()
+    # "on_delete=models.PROTECT" no deja borrar un socio o un libro que tenga reservas
+    socio = models.ForeignKey(Socio, on_delete=models.PROTECT, related_name="reservas")
+    libro = models.ForeignKey(Libro, on_delete=models.PROTECT, related_name="reservas")
+    fecha_reserva = models.DateTimeField(default=timezone.now)
+    estado = models.CharField(max_length=10, choices=ESTADOS, default=PENDIENTE)
