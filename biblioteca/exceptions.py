@@ -1,15 +1,38 @@
-class BibliotecaError(Exception):
+class ErrorBiblioteca(Exception):
     pass
 
-class LibroSinStockError(BibliotecaError):
+class DatoInvalido(ErrorBiblioteca):
     pass
 
-class SocioInactivoError(BibliotecaError):
+class LibroNoEncontrado(ErrorBiblioteca):
     pass
 
-class ReservaInvalidaError(BibliotecaError):
+class SocioNoEncontrado(ErrorBiblioteca):
     pass
 
-class ElementoNoEncontradoError(BibliotecaError):
+class ReservaNoEncontrada(ErrorBiblioteca):
     pass
 
+class IsbnDuplicado(ErrorBiblioteca):
+    pass
+
+class DniDuplicado(ErrorBiblioteca):
+    pass
+
+class NumeroSocioDuplicado(ErrorBiblioteca):
+    pass
+
+class SinDisponibilidad(ErrorBiblioteca):
+    pass
+
+class CantidadInvalida(ErrorBiblioteca):
+    pass
+
+class SocioInactivo(ErrorBiblioteca):
+    pass
+
+class ReservaDuplicada(ErrorBiblioteca):
+    pass
+
+class EstadoInvalido(ErrorBiblioteca):
+    pass
