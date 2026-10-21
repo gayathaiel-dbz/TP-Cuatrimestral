@@ -12,6 +12,26 @@ class Libro(models.Model):
     cantidad_total = models.PositiveIntegerField(default=1)
     cantidad_disponible = models.PositiveIntegerField(default=1)
 
+    def __str__(self):
+        return f"{self.titulo} - {self.autor} (ISBN {self.isbn}) - Disponibles: {self.cantidad_disponible}/{self.cantidad_total}"
+
+    def esta_disponible(self):
+        return self.cantidad_disponible > 0
+
+    def reservar_ejemplar(self):
+        # Baja la cantidad del ejemplar en 1, y no pude quedar abajo de 0.
+        if not self.esta_disponible():
+            raise SinDisponibilidad("No hay ejemplares disponibles de este libro.")
+        self.cantidad_disponible = self.cantidad_disponible - 1
+        self.save()
+
+    def liberar_ejemplar(self):
+        # Suma un ejemplar.
+        if self.cantidad_disponible >= self.cantidad_total:
+            raise CantidadInvalida("La cantidad disponible no puede superar la cantidad total.")
+        self.cantidad_disponible = self.cantidad_disponible + 1
+        self.save()
+
 class Socio(models.Model):
     numero_socio = models.PositiveIntegerField(unique=True)
     nombre = models.CharField(max_length=100)
