@@ -73,7 +73,7 @@ class Reserva(models.Model):
     ]
 
     # muchas reservas pertenecen a un socio o a un libro.
-    # "related_name" hace socio.reservas.all() o libro.reservas.all()
+    # "related_name" hace socio.reservas.all() o libro.reservas.all() para ver todas las reservas
     # "on_delete=models.PROTECT" no deja borrar un socio o un libro que tenga reservas
     socio = models.ForeignKey(Socio, on_delete=models.PROTECT, related_name="reservas")
     libro = models.ForeignKey(Libro, on_delete=models.PROTECT, related_name="reservas")
