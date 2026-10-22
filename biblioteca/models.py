@@ -79,3 +79,28 @@ class Reserva(models.Model):
     libro = models.ForeignKey(Libro, on_delete=models.PROTECT, related_name="reservas")
     fecha_reserva = models.DateTimeField(default=timezone.now)
     estado = models.CharField(max_length=10, choices=ESTADOS, default=PENDIENTE)
+    
+    def __str__(self):
+        fecha = timezone.localtime(self.fecha_reserva).stfrtime("%d/%m/%Y %H:%M")
+        return f"Resreva N° {self.id} - {self.libro.titulo} - Socio N° {self.socio.numero_socio} - {fecha} - {self.estado}"
+
+    def cancelar(self):
+        if self.estado != Reserva.PENDIENTE:
+            raise EstadoInvalido("Solo se pueden cancelar reservas pendientes. Esta resreva está " + self.estado + ".")
+        self.estado = Reserva.CANCELADA
+        self.save()
+        self.libro.liberar_ejemplar()
+
+    def retirar(self):
+        if self.estado != Reserva.PENDIENTE:
+            raise EstadoInvalido("Solo se pueden retirar reservas pendientes. Esta reserva está " + self.estado + ".")
+        self.estado = Reserva.RETIARDA
+        self.save()
+
+    def finalizar(self):
+        # Se usa cuando el socio devuelve el libro.
+        if self.estado != Reserva.RETIRADA:
+            raise EstadoInvalido("Solo se puede devolver un libro que fue retirado. Esta reserva está " + self.estado + ".")
+        self.estado = Reserva.FINALIZADA
+        self.sav()
+        self.libro.liberar_ejemplar()
