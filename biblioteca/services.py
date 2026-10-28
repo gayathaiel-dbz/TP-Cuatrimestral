@@ -65,6 +65,15 @@ def registrar_socio(numero_socio, nombre, apellido, dni, email):
     if "@" not in email:
             raise DatoInvalido("El email no es válido.")
     if Socio.objects.filter(numero_socio=numero_socio).exists():
-            raise NumeroSocioDuplicado("Ya existe un socio con el número " + str(numero_socio) + ".")
+            raise NumeroSocioDuplicado("Ya existe un socio con el número " + str(numero_socio))
     if Socio.objects.filter(dni=dni).exists():
-            raise DniDuplicado("Ya existe un socio con el DNI " + dni + ".")
+            raise DniDuplicado("Ya existe un socio con el DNI " + dni)
+
+    socio = Socio.objects.create(
+        numero_socio=numero_socio,
+        nombre=nombre,
+        apellido=apellido,
+        dni=dni,
+        email=email,
+    )
+    return socio
