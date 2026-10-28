@@ -11,3 +11,6 @@ from biblioteca.exceptions import (
     CantidadInvalida,
 )
 from biblioteca.models import Libro, Reserva, Socio
+
+# Libros
+def registrar_libro(isbn, titulo, autor, anio_publicacion, cantidad_total):
