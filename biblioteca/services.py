@@ -39,16 +39,24 @@ def listar_libros():
 def buscar_libro_por_isbn(isbn):
     libro = Libro.objects.filter(isbn=isbn).first()
     if libro is None:
-            raise LibroNoEncontrado("No existe un libro con el ISBN " + isbn)
+        raise LibroNoEncontrado("No existe un libro con el ISBN " + isbn + ".")
     return libro
 
 
 def buscar_libros_por_titulo(texto):
-    # icontains para que no importe si esta en mayuscula o minuscula.
+    # icontains = "contiene", sin importar mayúsculas o minúsculas.
+    # Así "rosa" encuentra "El nombre de la rosa".
     return Libro.objects.filter(titulo__icontains=texto).order_by("titulo")
+
 
 def buscar_libros_por_autor(texto):
     return Libro.objects.filter(autor__icontains=texto).order_by("titulo")
+
+
+def libros_disponibles():
+    # gt = "mayor que" (greater than)
+    return Libro.objects.filter(cantidad_disponible__gt=0).order_by("titulo")
+
 
 def libros_sin_disponibles():
     return Libro.objects.filter(cantidad_disponible=0).order_by("titulo")
