@@ -44,10 +44,11 @@ def buscar_libro_por_isbn(isbn):
 
 
 def buscar_libros_por_titulo(texto):
-
+    # icontains para que no importe si esta en mayuscula o minuscula
+    return Libro.objects.filter(titulo__icontains=texto).order_by("titulo")
 
 def buscar_libros_por_autor(texto):
-
+    return Libro.objects.filter(autor__icontains=texto).order_by("titulo")
 
 def libros_disponibles():
 
