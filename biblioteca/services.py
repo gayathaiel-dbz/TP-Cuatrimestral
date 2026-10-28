@@ -44,8 +44,7 @@ def buscar_libro_por_isbn(isbn):
 
 
 def buscar_libros_por_titulo(texto):
-    # icontains = "contiene", sin importar mayúsculas o minúsculas.
-    # Así "rosa" encuentra "El nombre de la rosa".
+    # icontains para que no importa si esta en mayuscula o minuscula
     return Libro.objects.filter(titulo__icontains=texto).order_by("titulo")
 
 
