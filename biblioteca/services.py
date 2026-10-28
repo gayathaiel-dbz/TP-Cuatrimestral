@@ -33,7 +33,7 @@ def registrar_libro(isbn, titulo, autor, anio_publicacion, cantidad_total):
 
 
 def listar_libros():
-    return Libro.objects.all().order_by("titulo")
+    return Libro.objects.all().order_by("titulo").
 
 
 def buscar_libro_por_isbn(isbn):
