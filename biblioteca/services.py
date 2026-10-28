@@ -39,7 +39,7 @@ def listar_libros():
 def buscar_libro_por_isbn(isbn):
     libro = Libro.objects.filter(isbn=isbn).first()
     if libro is None:
-            raise LibroNoEncontrado("No existe un libro con el ISBN " + isbn + ".")
+            raise LibroNoEncontrado("No existe un libro con el ISBN " + isbn)
     return libro
 
 
