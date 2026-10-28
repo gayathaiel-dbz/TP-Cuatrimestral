@@ -20,6 +20,17 @@ def registrar_libro(isbn, titulo, autor, anio_publicacion, cantidad_total):
         raise CantidadInvalida("El libro debe tener al menos 1 ejemplar")
     if Libro.objects.filter(isbn=isbn).exists():
         raise IsbnDuplicado("Ya existe un libro con el ISBN " + isbn)
+    
+    libro = Libro.objects.create(
+        isbn=isbn,
+        titulo=titulo,
+        autor=autor,
+        anio_publicacion=anio_publicacion,
+        cantidad_total=cantidad_total,
+        cantidad_disponible=cantidad_total,
+    )
+    return libro
+
 
 def listar_libros():
     return Libro.objects.all().order_by("titulo")
