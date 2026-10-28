@@ -14,7 +14,12 @@ from biblioteca.models import Libro, Reserva, Socio
 
 # Libros
 def registrar_libro(isbn, titulo, autor, anio_publicacion, cantidad_total):
-
+    if len(isbn) > 13:
+        raise DatoInvalido("El ISBN no puede tener mas de 13 caracteres")
+    if cantidad_total < 1:
+        raise CantidadInvalida("El libro debe tener al menos 1 ejemplar")
+    if Libro.objects.filter(isbn=isbn).exists():
+        raise IsbnDuplicado("Ya existe un libro con el ISBN " + isbn)
 
 def listar_libros():
     return Libro.objects.all().order_by("titulo")
