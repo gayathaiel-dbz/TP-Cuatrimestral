@@ -123,3 +123,6 @@ def reservas_pendientes():
 
 def reservas_de_socio(socio):
     return socio.reservas.all().order_by("-fecha_reserva")
+
+def reservas_de_libro(libro):
+    return libro.reservas.all().order_by("-fecha_reserva")
