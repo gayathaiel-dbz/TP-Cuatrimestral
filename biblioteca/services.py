@@ -63,7 +63,7 @@ def libros_sin_disponibles():
 # Socios 
 def registrar_socio(numero_socio, nombre, apellido, dni, email):
     if "@" not in email:
-            raise DatoInvalido("El email no es válido.")
+            raise DatoInvalido("El email no es válido")
     if Socio.objects.filter(numero_socio=numero_socio).exists():
             raise NumeroSocioDuplicado("Ya existe un socio con el número " + str(numero_socio))
     if Socio.objects.filter(dni=dni).exists():

@@ -21,14 +21,14 @@ class Libro(models.Model):
     def reservar_ejemplar(self):
         # Baja la cantidad del ejemplar en 1, y no pude quedar abajo de 0.
         if not self.esta_disponible():
-            raise SinDisponibilidad("No hay ejemplares de este libro.")
+            raise SinDisponibilidad("No hay ejemplares de este libro")
         self.cantidad_disponible = self.cantidad_disponible - 1
         self.save()
 
     def liberar_ejemplar(self):
         # Suma un ejemplar.
         if self.cantidad_disponible >= self.cantidad_total:
-            raise CantidadInvalida("La cantidad no puede superar la cantidad total.")
+            raise CantidadInvalida("La cantidad no puede superar la cantidad total")
         self.cantidad_disponible = self.cantidad_disponible + 1
         self.save()
 
@@ -86,21 +86,21 @@ class Reserva(models.Model):
 
     def cancelar(self):
         if self.estado != Reserva.PENDIENTE:
-            raise EstadoInvalido("Solo se pueden cancelar reservas pendientes. Esta reserva está " + self.estado + ".")
+            raise EstadoInvalido("Solo se pueden cancelar reservas pendientes. Esta reserva está " + self.estado)
         self.estado = Reserva.CANCELADA
         self.save()
         self.libro.liberar_ejemplar()
 
     def retirar(self):
         if self.estado != Reserva.PENDIENTE:
-            raise EstadoInvalido("Solo se pueden retirar reservas pendientes. Esta reserva está " + self.estado + ".")
+            raise EstadoInvalido("Solo se pueden retirar reservas pendientes. Esta reserva está " + self.estado)
         self.estado = Reserva.RETIRADA
         self.save()
 
     def finalizar(self):
         # Se usa cuando el socio devuelve el libro.
         if self.estado != Reserva.RETIRADA:
-            raise EstadoInvalido("Solo se puede devolver un libro que fue retirado. Esta reserva está " + self.estado + ".")
+            raise EstadoInvalido("Solo se puede devolver un libro que fue retirado. Esta reserva está " + self.estado)
         self.estado = Reserva.FINALIZADA
         self.save()
         self.libro.liberar_ejemplar()
