@@ -95,3 +95,11 @@ def reservar_libro(socio, libro):
     #El socio tiene que estar activo
     if not socio.puede_reservar():
         raise SocioInactivo("El socio está inactivo y no puede hacer reservas.")
+     
+    reservas_activas = Reserva.objects.filter(
+            socio=socio,
+            libro=libro,
+            estado__in=[Reserva.PENDIENTE, Reserva.RETIRADA],
+        )
+    if reservas_activas.exists():
+            raise ReservaDuplicada("El socio ya tiene una reserva activa de este libro.")
