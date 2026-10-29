@@ -94,17 +94,26 @@ def buscar_socio(numero_socio):
 def reservar_libro(socio, libro):
     #El socio tiene que estar activo
     if not socio.puede_reservar():
-        raise SocioInactivo("El socio está inactivo y no puede hacer reservas.")
-     
+        raise SocioInactivo("El socio está inactivo y no puede hacer reservas")
+     #No se puede tener una reserva del mismo libro
     reservas_activas = Reserva.objects.filter(
             socio=socio,
             libro=libro,
             estado__in=[Reserva.PENDIENTE, Reserva.RETIRADA],
         )
     if reservas_activas.exists():
-            raise ReservaDuplicada("El socio ya tiene una reserva activa de este libro.")
-    
+            raise ReservaDuplicada("El socio ya tiene una reserva activa de este libro")
+    #Tiene que haber libros
     libro.reservar_ejemplar()
     
     reserva = Reserva.objects.create(socio=socio, libro=libro)
     return reserva
+
+def buscar_reserva(numero_reserva):
+    reserva = Reserva.objects.filter(id=numero_reserva).first()
+    if reserva is None:
+        raise ReservaNoEncontrada("No existe la reserva N° " + str(numero_reserva))
+    return reserva
+#El "-" ordena de la más nueva a la más vieja
+def listar_reservas():
+    return Reserva.objects.all().order_by("-fecha_reserva")
