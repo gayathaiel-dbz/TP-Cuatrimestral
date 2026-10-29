@@ -120,3 +120,6 @@ def listar_reservas():
 
 def reservas_pendientes():
     return Reserva.objects.filter(estado=Reserva.PENDIENTE).order_by("-fecha_reserva")
+
+def reservas_de_socio(socio):
+    return socio.reservas.all().order_by("-fecha_reserva")
