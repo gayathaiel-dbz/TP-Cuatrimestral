@@ -116,4 +116,4 @@ def buscar_reserva(numero_reserva):
     return reserva
 #El "-" ordena de la más nueva a la más vieja
 def listar_reservas():
-    return Reserva.objects.all().order_by("-fecha_reserva")
+    return Reserva.objects.all().order_by("-fecha_reserva").
