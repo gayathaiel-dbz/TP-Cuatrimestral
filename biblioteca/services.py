@@ -77,3 +77,9 @@ def registrar_socio(numero_socio, nombre, apellido, dni, email):
         email=email,
     )
     return socio
+
+def listar_socios():
+    return Socio.objects.all().order_by("numero_socio")
+
+def socios_activos():
+    return Socio.objects.filter(activo=True).order_by("numero_socio")
