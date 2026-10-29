@@ -103,3 +103,8 @@ def reservar_libro(socio, libro):
         )
     if reservas_activas.exists():
             raise ReservaDuplicada("El socio ya tiene una reserva activa de este libro.")
+    
+    libro.reservar_ejemplar()
+    
+    reserva = Reserva.objects.create(socio=socio, libro=libro)
+    return reserva
