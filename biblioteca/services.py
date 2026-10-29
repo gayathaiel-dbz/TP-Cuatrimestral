@@ -83,3 +83,9 @@ def listar_socios():
 
 def socios_activos():
     return Socio.objects.filter(activo=True).order_by("numero_socio")
+
+def buscar_socio(numero_socio):
+    socio = Socio.objects.filter(numero_socio=numero_socio).first()
+    if socio is None:
+        raise SocioNoEncontrado("No existe un socio con el número " + str(numero_socio) + ".")
+    return socio
