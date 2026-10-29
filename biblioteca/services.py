@@ -87,5 +87,11 @@ def socios_activos():
 def buscar_socio(numero_socio):
     socio = Socio.objects.filter(numero_socio=numero_socio).first()
     if socio is None:
-        raise SocioNoEncontrado("No existe un socio con el número " + str(numero_socio) + ".")
+        raise SocioNoEncontrado("No existe un socio con el número " + str(numero_socio))
     return socio
+
+# Reservas
+def reservar_libro(socio, libro):
+    #El socio tiene que estar activo
+    if not socio.puede_reservar():
+        raise SocioInactivo("El socio está inactivo y no puede hacer reservas.")
