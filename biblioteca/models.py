@@ -19,14 +19,14 @@ class Libro(models.Model):
         return self.cantidad_disponible > 0
 
     def reservar_ejemplar(self):
-        # Baja la cantidad del ejemplar en 1, y no pude quedar abajo de 0.
+        # Baja la cantidad del ejemplar en 1 y no pude quedar abajo de 0
         if not self.esta_disponible():
             raise SinDisponibilidad("No hay ejemplares de este libro")
         self.cantidad_disponible = self.cantidad_disponible - 1
         self.save()
 
     def liberar_ejemplar(self):
-        # Suma un ejemplar.
+        # Acá se suma un ejemplar
         if self.cantidad_disponible >= self.cantidad_total:
             raise CantidadInvalida("La cantidad no puede superar la cantidad total")
         self.cantidad_disponible = self.cantidad_disponible + 1
@@ -59,7 +59,7 @@ class Socio(models.Model):
         self.save()
         
 class Reserva(models.Model):
-    # Posibles estados de una reserva
+    # Estos son los posibles estados de una reserva
     PENDIENTE = "PENDIENTE"
     RETIRADA = "RETIRADA"
     CANCELADA = "CANCELADA"
@@ -72,9 +72,7 @@ class Reserva(models.Model):
         (FINALIZADA, "Finalizada"),
     ]
 
-    # muchas reservas pertenecen a un socio o a un libro.
-    # "related_name" hace socio.reservas.all() o libro.reservas.all() para ver todas las reservas
-    # "on_delete=models.PROTECT" no deja borrar un socio o un libro que tenga reservas
+    # Muchas reservas pertenecen a un socio o a un libro. "on_delete=models.PROTECT" no deja borrar un socio o un libro que tenga reservas
     socio = models.ForeignKey(Socio, on_delete=models.PROTECT, related_name="reservas")
     libro = models.ForeignKey(Libro, on_delete=models.PROTECT, related_name="reservas")
     fecha_reserva = models.DateTimeField(default=timezone.now)
@@ -98,7 +96,7 @@ class Reserva(models.Model):
         self.save()
 
     def finalizar(self):
-        # Se usa cuando el socio devuelve el libro.
+        # Se usa cuando el socio devuelve el libro
         if self.estado != Reserva.RETIRADA:
             raise EstadoInvalido("Solo se puede devolver un libro que fue retirado. Esta reserva está " + self.estado)
         self.estado = Reserva.FINALIZADA
